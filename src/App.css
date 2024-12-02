@@ -1,0 +1,24 @@
+.App {
+  min-height: 100vh;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.light {
+  background-color: rgb(236, 236, 236);
+  color: #353535;
+}
+
+.dark {
+  background-color: #353535;
+  color: rgb(213, 213, 213);
+}
+
+.divLight {
+  background-color: rgb(181, 181, 181);
+  color: #353535;
+}
+
+.divDark {
+  background-color: #515151;
+  color: rgb(213, 213, 213);
+}
