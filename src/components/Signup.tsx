@@ -25,7 +25,7 @@ const Signup: FunctionComponent<SignupProps> = () => {
       .required("Email is required"),
     password: yup
       .string()
-      .min(7)
+      .min(8)
       .max(20)
       .matches(
         /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d{4,})(?=.*[!@%$#^&*\-_]).{7,20}$/,
@@ -67,10 +67,16 @@ const Signup: FunctionComponent<SignupProps> = () => {
       isBusiness: false,
     },
     validationSchema,
-    onSubmit: (values: User) => {
-      addUser(values);
-      console.log(values);
-      // Add API call here
+    onSubmit: async (values: User) => {
+      try {
+        await addUser(values);
+        alert("User added successfully");
+        formik.resetForm(); // איפוס השדות
+        navigate("/"); // ניווט לעמוד הכרטיסים
+      } catch (error) {
+        console.error("Registration failed:", error);
+        alert("Registration failed");
+      }
     },
   });
 
@@ -120,6 +126,9 @@ const Signup: FunctionComponent<SignupProps> = () => {
               placeholder="Last Name"
               {...formik.getFieldProps("name.last")}
             />
+            {formik.touched.name?.last && formik.errors.name?.last && (
+              <div className="invalid-feedback">{formik.errors.name.last}</div>
+            )}
           </div>
         </div>
 
@@ -132,6 +141,9 @@ const Signup: FunctionComponent<SignupProps> = () => {
             placeholder="Phone"
             {...formik.getFieldProps("phone")}
           />
+          {formik.touched.phone && formik.errors.phone && (
+            <div className="invalid-feedback">{formik.errors.phone}</div>
+          )}
         </div>
         <div className="mb-3">
           <input
@@ -142,6 +154,9 @@ const Signup: FunctionComponent<SignupProps> = () => {
             placeholder="Email"
             {...formik.getFieldProps("email")}
           />
+          {formik.touched.email && formik.errors.email && (
+            <div className="invalid-feedback">{formik.errors.email}</div>
+          )}
         </div>
         <div className="mb-3">
           <input
@@ -154,6 +169,9 @@ const Signup: FunctionComponent<SignupProps> = () => {
             placeholder="Password"
             {...formik.getFieldProps("password")}
           />
+          {formik.touched.password && formik.errors.password && (
+            <div className="invalid-feedback">{formik.errors.password}</div>
+          )}
         </div>
 
         <div className="mb-3">
@@ -184,6 +202,12 @@ const Signup: FunctionComponent<SignupProps> = () => {
               placeholder="Country"
               {...formik.getFieldProps("address.country")}
             />
+            {formik.touched.address?.country &&
+              formik.errors.address?.country && (
+                <div className="invalid-feedback">
+                  {formik.errors.address.country}
+                </div>
+              )}
           </div>
           <div className="col">
             <input
@@ -206,6 +230,11 @@ const Signup: FunctionComponent<SignupProps> = () => {
               placeholder="City"
               {...formik.getFieldProps("address.city")}
             />
+            {formik.touched.address?.city && formik.errors.address?.city && (
+              <div className="invalid-feedback">
+                {formik.errors.address.city}
+              </div>
+            )}
           </div>
           <div className="col">
             <input
@@ -218,6 +247,12 @@ const Signup: FunctionComponent<SignupProps> = () => {
               placeholder="Street"
               {...formik.getFieldProps("address.street")}
             />
+            {formik.touched.address?.street &&
+              formik.errors.address?.street && (
+                <div className="invalid-feedback">
+                  {formik.errors.address.street}
+                </div>
+              )}
           </div>
         </div>
         <div className="row mb-3">
@@ -233,6 +268,12 @@ const Signup: FunctionComponent<SignupProps> = () => {
               placeholder="House Number"
               {...formik.getFieldProps("address.houseNumber")}
             />
+            {formik.touched.address?.houseNumber &&
+              formik.errors.address?.houseNumber && (
+                <div className="invalid-feedback">
+                  {formik.errors.address.houseNumber}
+                </div>
+              )}
           </div>
           <div className="col">
             <input
@@ -245,6 +286,11 @@ const Signup: FunctionComponent<SignupProps> = () => {
               placeholder="ZIP Code"
               {...formik.getFieldProps("address.zip")}
             />
+            {formik.touched.address?.zip && formik.errors.address?.zip && (
+              <div className="invalid-feedback">
+                {formik.errors.address.zip}
+              </div>
+            )}
           </div>
         </div>
 

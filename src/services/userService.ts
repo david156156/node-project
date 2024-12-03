@@ -3,18 +3,27 @@ import { User } from "../interfaces/User";
 
 const api: string = `${process.env.REACT_APP_API}/users`;
 
-// export async function login(credentials: LoginCredentials) {
-//     try {
-//       const response = await axios.post<UserResponse>(`${api}/login`, credentials);
+export interface LoginCredentials {
+  email: string;
+  password: string;
+}
 
-//       // Store token in localStorage
-//       localStorage.setItem('token', response.data.token);
+export interface UserResponse {
+  token: string;
+}
 
-//       return response.data;
-//     } catch (error) {
-//       throw error;
-//     }
-//   }
+export async function login(credentials: LoginCredentials) {
+  try {
+    const response = await axios.post<UserResponse>(
+      `${api}/login`,
+      credentials
+    );
+    localStorage.setItem("token", response.data.token);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
 
 export function addUser(userData: User) {
   return axios.post(api, userData);
