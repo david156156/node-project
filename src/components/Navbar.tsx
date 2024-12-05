@@ -1,22 +1,26 @@
 import { FunctionComponent, useContext } from "react";
 import { NavLink } from "react-router-dom";
-import { ThemeContext } from "../contexts/ThemeContext";
-import { useUser } from "../contexts/UserContext";
 import { logout } from "../services/userService";
+import { useUser } from "../contexts/UserContext";
+import { ThemeContext } from "../contexts/ThemeContext";
 
 interface NavbarProps {}
 
 const Navbar: FunctionComponent<NavbarProps> = () => {
-  const { darkMode, toggleTheme } = useContext(ThemeContext);
+  const { darkMode, toggleTheme, searchTerm, setSearchTerm } =
+    useContext(ThemeContext);
   const { token, setToken, user } = useUser();
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+    // onSearch(event.target.value);
+  };
 
   const handleLogout = () => {
     setToken(null);
     logout();
   };
 
-  console.log(user, "user");
-  console.log(token, "token");
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -87,10 +91,12 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
                     className="form-control me-2"
                     type="search"
                     placeholder="Search"
+                    value={searchTerm}
+                    onChange={handleSearchChange}
                   />
-                  <button className="btn btn-outline-light" type="submit">
+                  {/* <button className="btn btn-outline-light" type="submit">
                     Search
-                  </button>
+                  </button> */}
                 </form>
 
                 <div className="d-flex flex-column flex-lg-row gap-2">

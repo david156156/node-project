@@ -69,6 +69,7 @@ const Signup: FunctionComponent<SignupProps> = () => {
     validationSchema,
     onSubmit: async (values: User) => {
       try {
+        // const response =
         await addUser(values);
         alert("User added successfully");
         formik.resetForm();

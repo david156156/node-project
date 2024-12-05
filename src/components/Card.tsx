@@ -1,13 +1,17 @@
-import { FunctionComponent, useEffect, useState } from "react";
-import Navbar from "./Navbar";
+import { FunctionComponent, useContext, useEffect, useState } from "react";
 import { getAllCards } from "../services/cardService";
 import { Card as CardInterface } from "../interfaces/Card";
+import { ThemeContext } from "../contexts/ThemeContext";
+import { useUser } from "../contexts/UserContext";
 
 interface CardProps {}
 
 const Card: FunctionComponent<CardProps> = () => {
   const [cards, setCards] = useState<CardInterface[]>([]);
+  const [filteredCards, setFilteredCards] = useState<CardInterface[]>([]);
   const [cardsChanged, setCardsChanged] = useState(false);
+  const { searchTerm } = useContext(ThemeContext);
+  const { user } = useUser();
 
   useEffect(() => {
     getAllCards()
@@ -15,7 +19,14 @@ const Card: FunctionComponent<CardProps> = () => {
         setCards(res.data);
       })
       .catch((err) => console.error(err));
-  }, [cardsChanged]);
+  }, []);
+
+  useEffect(() => {
+    const filtered = cards.filter((card) =>
+      card.title.toLowerCase().startsWith(searchTerm.toLowerCase())
+    );
+    setFilteredCards(filtered);
+  }, [searchTerm]);
 
   return (
     <>
@@ -25,8 +36,8 @@ const Card: FunctionComponent<CardProps> = () => {
           here you can find business cards from all categories
         </p>
         <div className="container row d-flex justify-content-center gap-3 pt-3 border-top">
-          {cards.length ? (
-            cards.map((card, index) => (
+          {filteredCards.length ? (
+            filteredCards.map((card, index) => (
               <div className="card" style={{ width: "18rem" }} key={index}>
                 <img
                   src={card.image.url}
@@ -56,6 +67,17 @@ const Card: FunctionComponent<CardProps> = () => {
             <p>No cards available</p>
           )}
         </div>
+        {user?.isBusiness && (
+          <div
+            className="buttonPlus position-fixed end-0 mb-5 me-4 rounded-circle d-flex justify-content-center align-items-center bg-primary"
+            onMouseOver={(e) =>
+              (e.currentTarget.style.transform = "scale(1.1)")
+            }
+            onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
+          >
+            <i className="fa-solid fa-plus" style={{ color: "#ffffff" }}></i>{" "}
+          </div>
+        )}
       </div>
     </>
   );

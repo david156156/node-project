@@ -22,3 +22,12 @@
   background-color: #515151;
   color: rgb(213, 213, 213);
 }
+
+.buttonPlus {
+  bottom: 100px;
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+  transition: transform 0.2s;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
