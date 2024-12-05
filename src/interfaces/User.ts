@@ -14,3 +14,9 @@ export interface User {
   };
   isBusiness: boolean;
 }
+
+export interface Token {
+  _id: string;
+  isAdmin: boolean;
+  isBusiness: boolean;
+}

@@ -1,12 +1,22 @@
 import { FunctionComponent, useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { ThemeContext } from "../contexts/ThemeContext";
+import { useUser } from "../contexts/UserContext";
+import { logout } from "../services/userService";
 
 interface NavbarProps {}
 
 const Navbar: FunctionComponent<NavbarProps> = () => {
   const { darkMode, toggleTheme } = useContext(ThemeContext);
-  console.log(darkMode);
+  const { token, setToken, user } = useUser();
+
+  const handleLogout = () => {
+    setToken(null);
+    logout();
+  };
+
+  console.log(user, "user");
+  console.log(token, "token");
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -55,11 +65,20 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
                     ABOUT
                   </NavLink>
                 </li>
-                <li className="nav-item">
-                  <NavLink className="nav-link" to="/">
-                    FAV CARDS
-                  </NavLink>
-                </li>
+                {user?._id && (
+                  <li className="nav-item">
+                    <NavLink className="nav-link" to="/">
+                      FAV CARDS
+                    </NavLink>
+                  </li>
+                )}
+                {user?.isBusiness && (
+                  <li className="nav-item">
+                    <NavLink className="nav-link" to="/">
+                      MY CARDS
+                    </NavLink>
+                  </li>
+                )}
               </ul>
 
               <div className="d-flex flex-column flex-lg-row align-items-start">
@@ -81,12 +100,23 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
                   >
                     {darkMode ? "☀️" : "🌙"}
                   </button>
-                  <NavLink className="btn btn-outline-light" to="/login">
-                    Login
-                  </NavLink>
-                  <NavLink className="btn btn-light" to="/signup">
-                    Sign Up
-                  </NavLink>
+                  {user?._id ? (
+                    <button
+                      onClick={handleLogout}
+                      className="btn btn-outline-light"
+                    >
+                      Logout
+                    </button>
+                  ) : (
+                    <>
+                      <NavLink className="btn btn-outline-light" to="/login">
+                        Login
+                      </NavLink>
+                      <NavLink className="btn btn-light" to="/signup">
+                        Sign Up
+                      </NavLink>
+                    </>
+                  )}
                 </div>
               </div>
             </div>

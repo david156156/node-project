@@ -71,8 +71,8 @@ const Signup: FunctionComponent<SignupProps> = () => {
       try {
         await addUser(values);
         alert("User added successfully");
-        formik.resetForm(); // איפוס השדות
-        navigate("/"); // ניווט לעמוד הכרטיסים
+        formik.resetForm();
+        navigate("/");
       } catch (error) {
         console.error("Registration failed:", error);
         alert("Registration failed");

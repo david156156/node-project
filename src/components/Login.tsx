@@ -2,13 +2,15 @@ import { FunctionComponent } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
-import { login, LoginCredentials } from "../services/userService";
+import { decode, login, LoginCredentials } from "../services/userService";
 import { useTheme } from "../contexts/ThemeContext";
+import { useUser } from "../contexts/UserContext";
 
 interface LoginProps {}
 
 const Login: FunctionComponent<LoginProps> = () => {
   const navigate = useNavigate();
+  const { setToken, token, user, setUser } = useUser();
 
   const formik = useFormik({
     initialValues: {
@@ -33,11 +35,15 @@ const Login: FunctionComponent<LoginProps> = () => {
     }),
     onSubmit: async (values: LoginCredentials) => {
       try {
-        await login(values);
-        alert("Login successful");
-        navigate("/cards");
+        const response = await login(values);
+        console.log(response, "response");
+        const decoded = decode(response);
+        console.log(decoded, "decoded");
+
+        setUser(decoded);
+        navigate("/");
       } catch (error) {
-        console.error("Login failed:", error);
+        alert("Login failed: Invalid email or password");
       }
     },
   });

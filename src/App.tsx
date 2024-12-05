@@ -5,18 +5,20 @@ import Card from "./components/Card";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
 import { ThemeProvider, useTheme } from "./contexts/ThemeContext";
+import { UserProvider } from "./contexts/UserContext";
 
 function App() {
   return (
     <ThemeProvider>
-      <AppContent />
+      <UserProvider>
+        <AppContent />
+      </UserProvider>
     </ThemeProvider>
   );
 }
 
 function AppContent() {
   const { darkMode } = useTheme();
-  console.log(darkMode);
 
   return (
     <div className={`App ${darkMode ? "dark" : "light"}`}>
