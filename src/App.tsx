@@ -6,6 +6,7 @@ import Signup from "./components/Signup";
 import Login from "./components/Login";
 import { ThemeProvider, useTheme } from "./contexts/ThemeContext";
 import { UserProvider } from "./contexts/UserContext";
+import AddCard from "./components/AddCard";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function AppContent() {
           <Route path="/about" element={<h1>About Page</h1>} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/add-card" element={<AddCard />} />
         </Routes>
       </Router>
     </div>

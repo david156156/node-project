@@ -3,10 +3,12 @@ import { getAllCards } from "../services/cardService";
 import { Card as CardInterface } from "../interfaces/Card";
 import { ThemeContext } from "../contexts/ThemeContext";
 import { useUser } from "../contexts/UserContext";
+import { useNavigate } from "react-router-dom";
 
 interface CardProps {}
 
 const Card: FunctionComponent<CardProps> = () => {
+  const navigat = useNavigate();
   const [cards, setCards] = useState<CardInterface[]>([]);
   const [filteredCards, setFilteredCards] = useState<CardInterface[]>([]);
   const [cardsChanged, setCardsChanged] = useState(false);
@@ -17,6 +19,7 @@ const Card: FunctionComponent<CardProps> = () => {
     getAllCards()
       .then((res) => {
         setCards(res.data);
+        setFilteredCards(res.data);
       })
       .catch((err) => console.error(err));
   }, []);
@@ -26,8 +29,11 @@ const Card: FunctionComponent<CardProps> = () => {
       card.title.toLowerCase().startsWith(searchTerm.toLowerCase())
     );
     setFilteredCards(filtered);
-  }, [searchTerm]);
+  }, [searchTerm, cards]);
 
+  const handleAddCard = () => {
+    navigat("/add-card");
+  };
   return (
     <>
       <div className="container">
@@ -55,12 +61,22 @@ const Card: FunctionComponent<CardProps> = () => {
                   </p>
                   <p className="card-text">Card Number: {card.bizNumber}</p>
                 </div>
-                <p className="text-end">
-                  <i
-                    className="fa-solid fa-phone"
-                    style={{ color: "#5c5c5c" }}
-                  ></i>
-                </p>
+                <div className="d-flex flex-row-reverse">
+                  <p className="ms-3">
+                    <i
+                      className="fa-solid fa-phone"
+                      style={{ color: "#5c5c5c" }}
+                    ></i>
+                  </p>
+                  {user?._id && (
+                    <p>
+                      <i
+                        className="fa-solid fa-heart"
+                        style={{ color: "#5c5c5c" }}
+                      ></i>
+                    </p>
+                  )}
+                </div>
               </div>
             ))
           ) : (
@@ -69,6 +85,7 @@ const Card: FunctionComponent<CardProps> = () => {
         </div>
         {user?.isBusiness && (
           <div
+            onClick={handleAddCard}
             className="buttonPlus position-fixed end-0 mb-5 me-4 rounded-circle d-flex justify-content-center align-items-center bg-primary"
             onMouseOver={(e) =>
               (e.currentTarget.style.transform = "scale(1.1)")
