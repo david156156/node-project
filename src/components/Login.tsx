@@ -87,9 +87,6 @@ const Login: FunctionComponent<LoginProps> = () => {
           Login
         </button>
       </form>
-      <button onClick={() => navigate("/sign-up")} className="btn btn-link p-0">
-        Sign Up
-      </button>
     </div>
   );
 };

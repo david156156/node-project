@@ -13,11 +13,16 @@ export function decode(token: string) {
   const decoded = jwtDecode<Token>(token);
   return decoded;
 }
+// משתמש רגיל
 // 1111@gmail.com
 // Aa@22222
 
+// משתמש ביזניס
 // 22222@gmail.com
 // Aa@111111
+
+// משתמש אדמין
+
 export async function login(credentials: LoginCredentials) {
   try {
     const response = await axios.post(`${api}/login`, credentials);
@@ -38,25 +43,25 @@ export function addUser(userData: User) {
   return axios.post(api, userData);
 }
 
-export async function addUser1(userData: User): Promise<void> {
-  try {
-    await axios.post(api, userData);
-  } catch (error) {
-    if (axios.isAxiosError(error) && error.response) {
-      const errorMessage = error.response.data.message;
-      if (errorMessage.includes("email")) {
-        alert("Email already exists");
-      } else if (errorMessage.includes("password")) {
-        alert("Invalid password");
-      } else {
-        alert("An error occurred: " + errorMessage);
-      }
-    } else {
-      alert("An unknown error occurred");
-    }
-    throw error;
-  }
-}
+// export async function addUser1(userData: User): Promise<void> {
+//   try {
+//     await axios.post(api, userData);
+//   } catch (error) {
+//     if (axios.isAxiosError(error) && error.response) {
+//       const errorMessage = error.response.data.message;
+//       if (errorMessage.includes("email")) {
+//         alert("Email already exists");
+//       } else if (errorMessage.includes("password")) {
+//         alert("Invalid password");
+//       } else {
+//         alert("An error occurred: " + errorMessage);
+//       }
+//     } else {
+//       alert("An unknown error occurred");
+//     }
+//     throw error;
+//   }
+// }
 
 export function getToken(): string | null {
   return localStorage.getItem("token");

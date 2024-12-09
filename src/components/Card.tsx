@@ -12,7 +12,7 @@ const Card: FunctionComponent<CardProps> = () => {
   const [cards, setCards] = useState<CardInterface[]>([]);
   const [filteredCards, setFilteredCards] = useState<CardInterface[]>([]);
   const [cardsChanged, setCardsChanged] = useState(false);
-  const { searchTerm } = useContext(ThemeContext);
+  const { searchTerm, darkMode } = useContext(ThemeContext);
   const { user } = useUser();
 
   useEffect(() => {
@@ -44,7 +44,11 @@ const Card: FunctionComponent<CardProps> = () => {
         <div className="container row d-flex justify-content-center gap-3 pt-3 border-top">
           {filteredCards.length ? (
             filteredCards.map((card, index) => (
-              <div className="card" style={{ width: "18rem" }} key={index}>
+              <div
+                className={`card ${darkMode ? "cardDark" : "cardLight"}`}
+                style={{ width: "18rem" }}
+                key={index}
+              >
                 <img
                   src={card.image.url}
                   className="card-img-top"
@@ -63,17 +67,16 @@ const Card: FunctionComponent<CardProps> = () => {
                 </div>
                 <div className="d-flex flex-row-reverse">
                   <p className="ms-3">
-                    <i
-                      className="fa-solid fa-phone"
-                      style={{ color: "#5c5c5c" }}
-                    ></i>
+                    <i className="fa-solid fa-phone"></i>
                   </p>
                   {user?._id && (
                     <p>
-                      <i
-                        className="fa-solid fa-heart"
-                        style={{ color: "#5c5c5c" }}
-                      ></i>
+                      <i className="fa-solid fa-heart"></i>
+                    </p>
+                  )}
+                  {user?.isAdmin && (
+                    <p>
+                      <i className="fa-solid fa-trash"></i>
                     </p>
                   )}
                 </div>

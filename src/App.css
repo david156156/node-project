@@ -13,14 +13,14 @@
   color: rgb(213, 213, 213);
 }
 
-.divLight {
-  background-color: rgb(181, 181, 181);
+.cardLight {
+  background-color: rgb(213, 213, 213);
   color: #353535;
 }
 
-.divDark {
-  background-color: #515151;
-  color: rgb(213, 213, 213);
+.cardDark {
+  background-color: #2c2c2c;
+  color: rgb(190, 190, 190);
 }
 
 .buttonPlus {

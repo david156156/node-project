@@ -83,6 +83,13 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
                     </NavLink>
                   </li>
                 )}
+                {user?.isAdmin && (
+                  <li className="nav-item">
+                    <NavLink className="nav-link" to="/">
+                      SANDBOX
+                    </NavLink>
+                  </li>
+                )}
               </ul>
 
               <div className="d-flex flex-column flex-lg-row align-items-start">

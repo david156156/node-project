@@ -11,8 +11,8 @@ export interface Card {
     country: string;
     city: string;
     street: string;
-    houseNumber: number;
-    zip: number;
+    houseNumber: string | number;
+    zip: string | number;
   };
-  bizNumber: number;
+  bizNumber?: number;
 }
