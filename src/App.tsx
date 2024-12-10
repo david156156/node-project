@@ -7,12 +7,17 @@ import Login from "./components/Login";
 import { ThemeProvider, useTheme } from "./contexts/ThemeContext";
 import { UserProvider } from "./contexts/UserContext";
 import AddCard from "./components/AddCard";
+import FavCards from "./components/FavCards";
+import { CardsProvider } from "./contexts/CardsContext";
+import MyCards from "./components/MyCards";
 
 function App() {
   return (
     <ThemeProvider>
       <UserProvider>
-        <AppContent />
+        <CardsProvider>
+          <AppContent />
+        </CardsProvider>
       </UserProvider>
     </ThemeProvider>
   );
@@ -31,6 +36,8 @@ function AppContent() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
           <Route path="/add-card" element={<AddCard />} />
+          <Route path="/fav-cards" element={<FavCards />} />
+          <Route path="/my-cards" element={<MyCards />} />
         </Routes>
       </Router>
     </div>

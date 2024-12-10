@@ -1,4 +1,5 @@
 export interface Card {
+  _id: string;
   title: string;
   subtitle: string;
   description: string;
@@ -15,4 +16,5 @@ export interface Card {
     zip: string | number;
   };
   bizNumber?: number;
+  likes?: string[];
 }

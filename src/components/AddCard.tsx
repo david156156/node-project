@@ -15,6 +15,7 @@ const AddCard: FunctionComponent<AddCardProps> = () => {
 
   const formik = useFormik({
     initialValues: {
+      _id: "",
       title: "",
       subtitle: "",
       description: "",

@@ -71,14 +71,14 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
                 </li>
                 {user?._id && (
                   <li className="nav-item">
-                    <NavLink className="nav-link" to="/">
+                    <NavLink className="nav-link" to="/fav-cards">
                       FAV CARDS
                     </NavLink>
                   </li>
                 )}
                 {user?.isBusiness && (
                   <li className="nav-item">
-                    <NavLink className="nav-link" to="/">
+                    <NavLink className="nav-link" to="/my-cards">
                       MY CARDS
                     </NavLink>
                   </li>

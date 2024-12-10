@@ -1,4 +1,5 @@
 import { createContext, useState, ReactNode, useContext } from "react";
+import { Card } from "../interfaces/Card";
 
 interface ThemeContextType {
   darkMode: boolean;
@@ -19,7 +20,9 @@ interface ThemeProviderProps {
 }
 
 export function ThemeProvider({ children }: ThemeProviderProps) {
+  const [loading, setLoading] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
+  const [cards, setCards] = useState<Card[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
 
   const toggleTheme = () => {
