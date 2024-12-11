@@ -5,12 +5,13 @@ import { useNavigate } from "react-router-dom";
 import { decode, login, LoginCredentials } from "../services/userService";
 import { useTheme } from "../contexts/ThemeContext";
 import { useUser } from "../contexts/UserContext";
+import { msgError, msgSuccess } from "../services/alert";
 
 interface LoginProps {}
 
 const Login: FunctionComponent<LoginProps> = () => {
   const navigate = useNavigate();
-  const { setToken, token, user, setUser } = useUser();
+  const { setUser } = useUser();
 
   const formik = useFormik({
     initialValues: {
@@ -36,14 +37,12 @@ const Login: FunctionComponent<LoginProps> = () => {
     onSubmit: async (values: LoginCredentials) => {
       try {
         const response = await login(values);
-        console.log(response, "response");
+        msgSuccess("Login successful", darkMode);
         const decoded = decode(response);
-        console.log(decoded, "decoded");
-
         setUser(decoded);
         navigate("/");
       } catch (error) {
-        alert("Login failed: Invalid email or password");
+        msgError("Login failed: Invalid email or password", darkMode);
       }
     },
   });
@@ -52,10 +51,10 @@ const Login: FunctionComponent<LoginProps> = () => {
 
   return (
     <div
-      className={`container p-4 mt-5 rounded ${
+      className={`container px-4 mt-5 rounded ${
         darkMode ? "divDark" : "divLight"
       }`}
-      style={{ width: "300px" }}
+      style={{ width: "300px", height: "500px", paddingTop: "70px" }}
     >
       <h2 className=" text-center">LOGIN</h2>
       <form onSubmit={formik.handleSubmit}>

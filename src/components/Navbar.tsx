@@ -9,7 +9,7 @@ interface NavbarProps {}
 const Navbar: FunctionComponent<NavbarProps> = () => {
   const { darkMode, toggleTheme, searchTerm, setSearchTerm } =
     useContext(ThemeContext);
-  const { token, setToken, user } = useUser();
+  const { token, setToken, user, setUser } = useUser();
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
@@ -18,14 +18,15 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
 
   const handleLogout = () => {
     setToken(null);
+    setUser(null);
     logout();
   };
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
         <div className="container-fluid">
-          <NavLink className="navbar-brand" to="/">
+          <NavLink className="navbar-brand fw-bold" to="/">
             BCard
           </NavLink>
 
@@ -107,12 +108,16 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
                 </form>
 
                 <div className="d-flex flex-column flex-lg-row gap-2">
-                  <button
+                  <div
                     onClick={toggleTheme}
-                    className="btn btn-outline-light"
+                    className="text-center cursor-pointer p-2"
                   >
-                    {darkMode ? "☀️" : "🌙"}
-                  </button>
+                    {darkMode ? (
+                      <i className="fa-solid fa-sun text-light"></i>
+                    ) : (
+                      <i className="fa-solid fa-moon text-light"></i>
+                    )}
+                  </div>
                   {user?._id ? (
                     <button
                       onClick={handleLogout}

@@ -5,17 +5,18 @@ import { useNavigate } from "react-router-dom";
 import { Card } from "../interfaces/Card";
 import { ThemeContext } from "../contexts/ThemeContext";
 import { addCard } from "../services/cardService";
+import { msgError, msgSuccess } from "../services/alert";
+import { useUser } from "../contexts/UserContext";
 
 interface AddCardProps {}
 
 const AddCard: FunctionComponent<AddCardProps> = () => {
   const { darkMode } = useContext(ThemeContext);
-
+  const { user } = useUser();
   const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
-      _id: "",
       title: "",
       subtitle: "",
       description: "",
@@ -56,6 +57,7 @@ const AddCard: FunctionComponent<AddCardProps> = () => {
     }),
     onSubmit: async (values: Card) => {
       try {
+        console.log("Submitting values:", values);
         const formattedValues = {
           ...values,
           address: {
@@ -66,21 +68,25 @@ const AddCard: FunctionComponent<AddCardProps> = () => {
         };
 
         await addCard(formattedValues);
-        alert("Card added successfully");
+        msgSuccess("Card added successfully", darkMode);
         navigate("/");
       } catch (error) {
-        console.error("Failed to add card:", error);
+        console.error("Error adding card:", error);
+        msgError("Failed to add card", darkMode);
       }
     },
   });
 
+  if (!user?.isBusiness) {
+    return (
+      <div className="text-center mt-5 p-5 display-5">
+        You do not have permission to add a card.
+      </div>
+    );
+  }
+
   return (
-    <div
-      className={`container p-4 mt-5 rounded  ${
-        darkMode ? "cardDark" : "cardLight"
-      }`}
-      style={{ maxWidth: "600px" }}
-    >
+    <div className={"container p-4 mt-5 rounded"} style={{ maxWidth: "600px" }}>
       <h2 className="text-center">Add New Card</h2>
       <form onSubmit={formik.handleSubmit}>
         <div className="row">
@@ -90,7 +96,7 @@ const AddCard: FunctionComponent<AddCardProps> = () => {
                 formik.touched.title && formik.errors.title ? "is-invalid" : ""
               }`}
               type="text"
-              placeholder="Title"
+              placeholder="Title*"
               {...formik.getFieldProps("title")}
             />
             {formik.touched.title && formik.errors.title ? (
@@ -105,7 +111,7 @@ const AddCard: FunctionComponent<AddCardProps> = () => {
                   : ""
               }`}
               type="text"
-              placeholder="Subtitle"
+              placeholder="Subtitle*"
               {...formik.getFieldProps("subtitle")}
             />
             {formik.touched.subtitle && formik.errors.subtitle ? (
@@ -121,7 +127,7 @@ const AddCard: FunctionComponent<AddCardProps> = () => {
                   ? "is-invalid"
                   : ""
               }`}
-              placeholder="Description"
+              placeholder="Description*"
               {...formik.getFieldProps("description")}
             />
             {formik.touched.description && formik.errors.description ? (
@@ -136,7 +142,7 @@ const AddCard: FunctionComponent<AddCardProps> = () => {
                 formik.touched.phone && formik.errors.phone ? "is-invalid" : ""
               }`}
               type="tel"
-              placeholder="Phone"
+              placeholder="Phone*"
               {...formik.getFieldProps("phone")}
             />
             {formik.touched.phone && formik.errors.phone ? (
@@ -151,7 +157,7 @@ const AddCard: FunctionComponent<AddCardProps> = () => {
                 formik.touched.email && formik.errors.email ? "is-invalid" : ""
               }`}
               type="email"
-              placeholder="Email"
+              placeholder="Email*"
               {...formik.getFieldProps("email")}
             />
             {formik.touched.email && formik.errors.email ? (
@@ -231,7 +237,7 @@ const AddCard: FunctionComponent<AddCardProps> = () => {
                   : ""
               }`}
               type="text"
-              placeholder="Country"
+              placeholder="Country*"
               {...formik.getFieldProps("address.country")}
             />
             {formik.touched.address?.country &&
@@ -251,7 +257,7 @@ const AddCard: FunctionComponent<AddCardProps> = () => {
                   : ""
               }`}
               type="text"
-              placeholder="City"
+              placeholder="City*"
               {...formik.getFieldProps("address.city")}
             />
             {formik.touched.address?.city && formik.errors.address?.city ? (
@@ -268,7 +274,7 @@ const AddCard: FunctionComponent<AddCardProps> = () => {
                   : ""
               }`}
               type="text"
-              placeholder="Street"
+              placeholder="Street*"
               {...formik.getFieldProps("address.street")}
             />
             {formik.touched.address?.street && formik.errors.address?.street ? (
@@ -288,7 +294,7 @@ const AddCard: FunctionComponent<AddCardProps> = () => {
                   : ""
               }`}
               type="number"
-              placeholder="House Number"
+              placeholder="House Number*"
               {...formik.getFieldProps("address.houseNumber")}
             />
             {formik.touched.address?.houseNumber &&

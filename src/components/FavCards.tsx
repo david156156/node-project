@@ -61,7 +61,7 @@ const FavCards: FunctionComponent<FavCardsProps> = () => {
                     </p>
                     {user?._id && (
                       <p
-                        onClick={() => handleLike(card._id)}
+                        onClick={() => handleLike(card._id!)}
                         className={`cursor-pointer ${
                           card.likes?.includes(user._id) ? "text-danger" : ""
                         }`}

@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useTheme } from "../contexts/ThemeContext";
 import { addUser } from "../services/userService";
 import { User } from "../interfaces/User";
+import { msgError, msgSuccess } from "../services/alert";
 
 interface SignupProps {}
 
@@ -71,12 +72,11 @@ const Signup: FunctionComponent<SignupProps> = () => {
       try {
         // const response =
         await addUser(values);
-        alert("User added successfully");
+        msgSuccess("User added successfully", darkMode);
         formik.resetForm();
         navigate("/");
       } catch (error) {
-        console.error("Registration failed:", error);
-        alert("Registration failed");
+        msgError("Registration failed", darkMode);
       }
     },
   });
