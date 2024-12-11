@@ -9,6 +9,7 @@ interface CardsContextType {
   setCards: (cards: Card[]) => void;
   favoriteCards: Card[];
   loading: boolean;
+  setLoading: (loading: boolean) => void;
   error: string | null;
   fetchCards: () => Promise<void>;
   handleLike: (cardId: string) => Promise<void>;
@@ -40,7 +41,6 @@ export const CardsProvider: React.FC<{ children: ReactNode }> = ({
     try {
       setLoading(true);
       await updateCardLikes(cardId);
-
       setCards((prevCards) =>
         prevCards.map((card) => {
           if (card._id === cardId && user?._id) {
@@ -75,6 +75,7 @@ export const CardsProvider: React.FC<{ children: ReactNode }> = ({
         setCards,
         favoriteCards,
         loading,
+        setLoading,
         error,
         fetchCards,
         handleLike,

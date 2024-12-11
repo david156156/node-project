@@ -9,28 +9,28 @@ interface FavCardsProps {}
 const FavCards: FunctionComponent<FavCardsProps> = () => {
   const navigat = useNavigate();
 
-  const { favoriteCards, loading, fetchCards, handleLike } = useCards();
+  const { favoriteCards, fetchCards, handleLike } = useCards();
   const { darkMode } = useTheme();
   const { user } = useUser();
 
-  useEffect(() => {
-    fetchCards();
-  }, []);
+  // useEffect(() => {
+  //   fetchCards();
+  // }, []);
 
   const handleAddCard = () => {
     navigat("/add-card");
   };
 
-  if (loading) return <div>Loading...</div>;
+  if (!favoriteCards) return <div>Loading...</div>;
 
   return (
     <>
-      <div className="container">
+      <div className="container mt-5">
         <h4 className="text-center display-5">Cards Page</h4>
-        <p className="text-center h4">
+        <p className="text-center h4 mb-4">
           here you can find business cards from all categories
         </p>
-        <div className="container row d-flex justify-content-center gap-3 pt-3 border-top">
+        <div className="container row d-flex justify-content-center gap-3  pt-4 border-top">
           {favoriteCards.length ? (
             favoriteCards.map((card, index) => (
               <div
@@ -82,19 +82,18 @@ const FavCards: FunctionComponent<FavCardsProps> = () => {
             <p>No cards available</p>
           )}
         </div>
-        {user?.isBusiness ||
-          (user?.isAdmin && (
-            <div
-              onClick={handleAddCard}
-              className="buttonPlus position-fixed end-0 mb-5 me-4 rounded-circle d-flex justify-content-center align-items-center bg-primary"
-              onMouseOver={(e) =>
-                (e.currentTarget.style.transform = "scale(1.1)")
-              }
-              onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
-            >
-              <i className="fa-solid fa-plus" style={{ color: "#ffffff" }}></i>{" "}
-            </div>
-          ))}
+        {(user?.isBusiness || user?.isAdmin) && (
+          <div
+            onClick={handleAddCard}
+            className="buttonPlus position-fixed end-0 mb-5 me-4 rounded-circle d-flex justify-content-center align-items-center bg-primary"
+            onMouseOver={(e) =>
+              (e.currentTarget.style.transform = "scale(1.1)")
+            }
+            onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
+          >
+            <i className="fa-solid fa-plus" style={{ color: "#ffffff" }}></i>{" "}
+          </div>
+        )}
       </div>
     </>
   );

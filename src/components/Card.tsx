@@ -13,7 +13,7 @@ const Card: FunctionComponent<CardProps> = () => {
   const [filteredCards, setFilteredCards] = useState<CardInterface[]>([]);
   const { searchTerm, darkMode } = useContext(ThemeContext);
   const { user } = useUser();
-  const { loading, handleLike, cards, setCards } = useCards();
+  const { handleLike, cards, setCards } = useCards();
 
   useEffect(() => {
     getAllCards()
@@ -34,14 +34,18 @@ const Card: FunctionComponent<CardProps> = () => {
   const handleAddCard = () => {
     navigat("/add-card");
   };
+
+  const handleCardClick = (id: string) => {
+    navigat(`/card/${id}`);
+  };
   return (
     <>
-      <div className="container">
+      <div className="container mt-5">
         <h4 className="text-center display-5">Cards Page</h4>
-        <p className="text-center h4">
+        <p className="text-center h4 mb-4">
           here you can find business cards from all categories
         </p>
-        <div className="container row d-flex justify-content-center gap-3 pt-3 border-top">
+        <div className="container d-flex flex-wrap  justify-content-center gap-3 border-top pt-4">
           {filteredCards.length ? (
             filteredCards.map((card, index) => (
               <div
@@ -51,8 +55,9 @@ const Card: FunctionComponent<CardProps> = () => {
               >
                 <img
                   src={card.image.url}
-                  className="card-img-top"
+                  className="card-img-top cursor-pointer"
                   alt={card.image.alt}
+                  onClick={() => handleCardClick(card._id!)}
                 />
                 <div className="px-2">
                   <div className="card-body">

@@ -14,6 +14,8 @@ import About from "./components/About";
 import Footer from "./components/Footer";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import CardDetails from "./components/CardDetails";
+import EditCard from "./components/EditCard";
 
 function App() {
   return (
@@ -43,6 +45,8 @@ function AppContent() {
           <Route path="/add-card" element={<AddCard />} />
           <Route path="/fav-cards" element={<FavCards />} />
           <Route path="/my-cards" element={<MyCards />} />
+          <Route path="/card/:id" element={<CardDetails />} />
+          <Route path="/my-cards/:id" element={<EditCard />} />
         </Routes>
         <Footer />
       </Router>

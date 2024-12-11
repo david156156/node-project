@@ -27,7 +27,14 @@ export function deleteCard(id: string) {
   });
 }
 export function updateCard(id: string, updatedCard: Card) {
-  return axios.put(`${api}/${id}`, updatedCard);
+  const token = localStorage.getItem("token");
+
+  return axios.put(`${api}/${id}`, updatedCard, {
+    headers: {
+      "Content-Type": "application/json",
+      "x-auth-token": token,
+    },
+  });
 }
 
 export async function updateCardLikes(cardId: string) {
@@ -61,5 +68,10 @@ export async function getMyCards() {
     },
   });
 
+  return response.data;
+}
+
+export async function getCardById(id: string) {
+  const response = await axios.get(`${api}/${id}`);
   return response.data;
 }

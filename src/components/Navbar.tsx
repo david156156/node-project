@@ -1,5 +1,5 @@
 import { FunctionComponent, useContext } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { logout } from "../services/userService";
 import { useUser } from "../contexts/UserContext";
 import { ThemeContext } from "../contexts/ThemeContext";
@@ -7,16 +7,17 @@ import { ThemeContext } from "../contexts/ThemeContext";
 interface NavbarProps {}
 
 const Navbar: FunctionComponent<NavbarProps> = () => {
+  const navigat = useNavigate();
   const { darkMode, toggleTheme, searchTerm, setSearchTerm } =
     useContext(ThemeContext);
   const { token, setToken, user, setUser } = useUser();
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
-    // onSearch(event.target.value);
   };
 
   const handleLogout = () => {
+    navigat("/");
     setToken(null);
     setUser(null);
     logout();
@@ -96,15 +97,12 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
               <div className="d-flex flex-column flex-lg-row align-items-start">
                 <form className="d-flex mb-3 mb-lg-0 me-lg-3">
                   <input
-                    className="form-control me-2"
+                    className="form-control"
                     type="search"
                     placeholder="Search"
                     value={searchTerm}
                     onChange={handleSearchChange}
                   />
-                  {/* <button className="btn btn-outline-light" type="submit">
-                    Search
-                  </button> */}
                 </form>
 
                 <div className="d-flex flex-column flex-lg-row gap-2">
@@ -119,12 +117,21 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
                     )}
                   </div>
                   {user?._id ? (
-                    <button
-                      onClick={handleLogout}
-                      className="btn btn-outline-light"
-                    >
-                      Logout
-                    </button>
+                    <>
+                      <button
+                        onClick={handleLogout}
+                        className="btn btn-outline-light"
+                      >
+                        Logout
+                      </button>
+                      <div className="nav-link p-0">
+                        <img
+                          src="https://cdn-icons-png.flaticon.com/512/219/219986.png"
+                          alt="icon-user"
+                          style={{ width: "40px", height: "40px" }}
+                        />
+                      </div>
+                    </>
                   ) : (
                     <>
                       <NavLink className="btn btn-outline-light" to="/login">
