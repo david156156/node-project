@@ -56,7 +56,7 @@ const CardDetails: FunctionComponent<CardDetailsProps> = () => {
             style={{ maxHeight: "400px" }}
             alt={card.image.alt || card.title}
           />
-          <div className="card-body">
+          <div className="px-4 card-body">
             <h2 className="display-5 p-3">{card.title}</h2>
             <p className="card-text">{card.subtitle}</p>
             <p className="card-text">{card.description}</p>

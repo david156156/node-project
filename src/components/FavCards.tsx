@@ -26,9 +26,9 @@ const FavCards: FunctionComponent<FavCardsProps> = () => {
   return (
     <>
       <div className="container mt-5">
-        <h4 className="text-center display-5">Cards Page</h4>
+        <h4 className="text-center display-5">Favorite Cards</h4>
         <p className="text-center h4 mb-4">
-          here you can find business cards from all categories
+          Here you can find all your favorite business cards.
         </p>
         <div className="container row d-flex justify-content-center gap-3  pt-4 border-top">
           {favoriteCards.length ? (
