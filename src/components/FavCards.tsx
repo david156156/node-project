@@ -13,12 +13,12 @@ const FavCards: FunctionComponent<FavCardsProps> = () => {
   const { darkMode } = useTheme();
   const { user } = useUser();
 
-  // useEffect(() => {
-  //   fetchCards();
-  // }, []);
-
   const handleAddCard = () => {
     navigat("/add-card");
+  };
+
+  const handleCardClick = (id: string) => {
+    navigat(`/card/${id}`);
   };
 
   if (!favoriteCards) return <div>Loading...</div>;
@@ -41,6 +41,7 @@ const FavCards: FunctionComponent<FavCardsProps> = () => {
                 <img
                   src={card.image.url}
                   className="card-img-top"
+                  onClick={() => handleCardClick(card._id!)}
                   alt={card.image.alt}
                 />
                 <div className="px-2">
