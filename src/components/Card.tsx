@@ -36,7 +36,7 @@ const Card: FunctionComponent<CardProps> = () => {
   };
 
   const handleCardClick = (id: string) => {
-    navigat(`/card/${id}`);
+    navigat(`/card-details/${id}`);
   };
   return (
     <>

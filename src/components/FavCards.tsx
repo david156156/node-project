@@ -18,7 +18,7 @@ const FavCards: FunctionComponent<FavCardsProps> = () => {
   };
 
   const handleCardClick = (id: string) => {
-    navigat(`/card/${id}`);
+    navigat(`/card-details/${id}`);
   };
 
   if (!favoriteCards) return <div>Loading...</div>;
@@ -40,7 +40,7 @@ const FavCards: FunctionComponent<FavCardsProps> = () => {
               >
                 <img
                   src={card.image.url}
-                  className="card-img-top"
+                  className="card-img-top cursor-pointer"
                   onClick={() => handleCardClick(card._id!)}
                   alt={card.image.alt}
                 />

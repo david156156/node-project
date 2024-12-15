@@ -16,6 +16,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CardDetails from "./components/CardDetails";
 import EditCard from "./components/EditCard";
+import { LoadScript } from "@react-google-maps/api";
 
 function App() {
   return (
@@ -35,21 +36,23 @@ function AppContent() {
 
   return (
     <div className={`App ${darkMode ? "dark" : "light"}`}>
-      <Router>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Card />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/add-card" element={<AddCard />} />
-          <Route path="/fav-cards" element={<FavCards />} />
-          <Route path="/my-cards" element={<MyCards />} />
-          <Route path="/card/:id" element={<CardDetails />} />
-          <Route path="/my-cards/:id" element={<EditCard />} />
-        </Routes>
-        <Footer />
-      </Router>
+      <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY!}>
+        <Router>
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<Card />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/add-card" element={<AddCard />} />
+            <Route path="/fav-cards" element={<FavCards />} />
+            <Route path="/my-cards" element={<MyCards />} />
+            <Route path="/card-details/:id" element={<CardDetails />} />
+            <Route path="/my-cards/:id" element={<EditCard />} />
+          </Routes>
+          <Footer />
+        </Router>
+      </LoadScript>
     </div>
   );
 }

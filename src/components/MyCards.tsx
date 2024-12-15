@@ -43,7 +43,7 @@ const MyCards: FunctionComponent<MyCardsProps> = () => {
   };
 
   const handleCardClick = (id: string) => {
-    navigat(`/card/${id}`);
+    navigat(`/card-details/${id}`);
   };
 
   const handleAddCard = () => {
