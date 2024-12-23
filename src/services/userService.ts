@@ -2,7 +2,7 @@ import axios from "axios";
 import { Token, User } from "../interfaces/User";
 import { jwtDecode } from "jwt-decode";
 
-const api: string = `${process.env.REACT_APP_API}/users`;
+const api: string = `https://monkfish-app-z9uza.ondigitalocean.app/bcard2/users`;
 
 // משתמש רגיל
 // 1111@gmail.com

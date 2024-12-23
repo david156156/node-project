@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Card } from "../interfaces/Card";
 
-const api: string = `${process.env.REACT_APP_API}/cards`;
+const api: string = `https://monkfish-app-z9uza.ondigitalocean.app/bcard2/cards`;
 
 export function getAllCards() {
   return axios.get(api);
