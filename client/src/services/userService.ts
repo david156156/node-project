@@ -31,8 +31,6 @@ export function logout() {
 }
 
 export function addUser(userData: User) {
-  console.log(userData);
-
   return axios.post(api, userData);
 }
 

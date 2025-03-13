@@ -87,7 +87,7 @@ const MyCards: FunctionComponent<MyCardsProps> = () => {
                   </p>
 
                   {user && (
-                    <>
+                    <div>
                       <p
                         onClick={() => handleLike(card._id!)}
                         className={`m-0 p-2 cursor-pointer ${
@@ -113,7 +113,7 @@ const MyCards: FunctionComponent<MyCardsProps> = () => {
                       >
                         <i className="fa-solid fa-trash"></i>
                       </p>
-                    </>
+                    </div>
                   )}
                 </div>
               </div>
